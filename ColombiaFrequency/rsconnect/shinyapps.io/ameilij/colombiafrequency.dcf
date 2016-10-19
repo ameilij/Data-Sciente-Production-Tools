@@ -3,6 +3,8 @@ title:
 account: ameilij
 server: shinyapps.io
 appId: 132300
-bundleId: 589183
+bundleId: 590387
 url: https://ameilij.shinyapps.io/colombiafrequency/
-when: 1476755591.8851
+when: 1476841187.22836
+asMultiple: FALSE
+asStatic: FALSE

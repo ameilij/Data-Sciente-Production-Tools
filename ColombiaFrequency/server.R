@@ -42,6 +42,11 @@ shinyServer(function(input, output) {
     if(input$selectLevel == 4){
       data <- data[(data$level == "VC"), ]}
     
+    # Query data on year
+    data$sales <- 0
+    if(input$year2015) {data$sales <- data$sales + data$sales_2015}
+    if(input$year2016) {data$sales <- data$sales + data$sales_2016}
+    
     plot_ly(x = data$sales, y = data$frequency, mode = "markers", 
             text = data$name, hoverinfo="text+x+y", color = data$channel, size = data$sales)  
   })
