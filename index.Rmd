@@ -1,0 +1,70 @@
+---
+title: "Multiplaza Mall Map | Panama Republic"
+author: "Ariel Meilij"
+date: "October 23, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Multiplaza Panama is perhaps not only the nicest mall in Panama, but probably the nicest mall in Latin America, period. People from the US or Europe usually stand in awe of the incredible retail landscape and ammenities. The map below shows the 3 major athletic gear doors inside the mall. 
+
+DOOR                | Pop-up Marker
+--------------------|--------------------------------------------------------
+Sportline America   | Sporting good store with a little bit of everything
+Adidas              | Adidas concept store with _mediocre_ apparel
+Nike Shop           | Only the best from the __best brand__ in the world!
+
+Check-out the locations in the map below:
+
+```{r buildMap, echo=FALSE, message=FALSE}
+library(leaflet)
+
+mapDF <- data.frame(
+  name = c("Nikeshop", "Adidas", "Sportline"),
+  lat = c(8.985309, 8.986343, 8.986165),
+  lng = c(-79.511173, -79.510798, -79.511680),
+  popup = c("Cool shoes!", "Boring apparel...", "A little of everything :-|"),
+  equity = c(60, 20, 40),
+  url = c("www.nike.com", "adidas.com", "sportline.com.pa"),
+  color = c("red", "black", "blue")
+)
+
+myMap <- leaflet(data = mapDF) %>%
+  addTiles() %>%
+  addMarkers(popup = paste(mapDF$name, "<br>", mapDF$popup, "<br>", "<a href=>", mapDF$url, "</a>")) %>%
+  addCircleMarkers(radius = mapDF$equity, col = mapDF$color) %>%
+  setView(-79.511173, 8.985309, zoom = 18)
+myMap
+```
+
+### Code Implementation
+If you are curious about the code, it's rather simple. Store everything in a data.frame and then call on the data frame itself to create the map. R and Leaflet will assume latitude and longitude correctly if you name the variables __lat__ and __lng__ respectively. Just remember to set the code options to ```message = FALSE``` in order to avoid error messages on the topic. 
+
+```{r buildMapShowCode, eval=FALSE, message=FALSE}
+library(leaflet)
+
+mapDF <- data.frame(
+  name = c("Nikeshop", "Adidas", "Sportline"),
+  lat = c(8.985309, 8.986343, 8.986165),
+  lng = c(-79.511173, -79.510798, -79.511680),
+  popup = c("Cool shoes!", "Boring apparel...", "A little of everything :-|"),
+  equity = c(60, 20, 40),
+  url = c("www.nike.com", "adidas.com", "sportline.com.pa"),
+  color = c("red", "black", "blue")
+)
+
+myMap <- leaflet(data = mapDF) %>%
+  addTiles() %>%
+  addMarkers(popup = paste(mapDF$name, "<br>", mapDF$popup, "<br>", "<a href=>", mapDF$url, "</a>")) %>%
+  addCircleMarkers(radius = mapDF$equity, col = mapDF$color) %>%
+  setView(-79.511173, 8.985309, zoom = 18)
+myMap
+```
+
+Another very important issue. I could not get my map to show. Everytime I displayed it on my browser all I got was a gray rectangle until I clicked on the zoom control. This seems to be a persistant problem and known in the Internet given multiple questions in __StackOverflow__. My best workaround was to use ```setView(-79.511173, 8.985309, zoom = 18)``` which centers the view of the map and presets zoom, thus making the map visible in most browsers.
+
+
+
